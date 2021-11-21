@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 	<title>Automatic Remote Feeder</title>
     <link rel="stylesheet" href="styles.css">
-	<script src="scripts.js" defer></script>
+	<script src="arf.js" defer></script>
 </head>
 
 <body>
