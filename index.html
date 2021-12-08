@@ -13,15 +13,15 @@
 			<td style="text-align:center" colspan="2"><label for="dispense-amount">Dispense how many cups?</label></td>
 		</tr>
 		<tr>
-			<td><input type="range" id="dispense-amount" min="0" max="10" step=".5" value="5" onchange="range()"></td>
-			<td><span id="amount">Dispense 5 Cup(s)</span></td>
+			<td><input type="range" id="dispense-amount" min="0" max="5" step=".5" value="5" onchange="range()"></td>
+			<td><span id="amount">Dispense 2.5 Cup(s)</span></td>
 		</tr>
 		<tr>
 			<td colspan="2"><span id="dispense-button"><button type="button" id="dispense">Dispense</button></span></td>
 		</tr>
 	</table>
     
-	
+<!--
 	<table>
 	<tr>
 		<td><label for="auto-date">What day do you want to automatically dispense food?</label></td>
@@ -36,6 +36,20 @@
 		<td style="text-align:center"><input type="time" id="auto-time"></input></td>
 	</tr>
 	</table>
+-->
+	<form method="post" action="index.php">
+		<div>
+			<label>What day do you want to automatically dispense food? <input type="date" name="auto-date"></label>
+		</div>
+		<div>
+			<label>What time fo you want to automatically dispense food? <input type="time" name="auto-time"></label>
+		</div>
+		<div>
+			<label>How many cups to dispense? <input type="range" name="auto-amount" id="auto-dispense-amount" min="0" max="10" step=".5" value="5" onchange="auto-range()"></label>
+			<span id="auto-amount">Dispense 5 Cup(s)</span>
+		</div>
+		<input type="submit" value="Save">
+	</form>
 	
 </body>
     

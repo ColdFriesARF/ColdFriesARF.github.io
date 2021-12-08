@@ -14,7 +14,7 @@
 		</tr>
 		<tr>
 			<td><input type="range" id="dispense-amount" min="0" max="5" step=".5" value="5" onchange="range()"></td>
-			<td><span id="amount">Dispense 2.5 Cup(s)</span></td>
+			<td><span id="amount">Dispense 5 Cup(s)</span></td>
 		</tr>
 		<tr>
 			<td colspan="2"><span id="dispense-button"><button type="button" id="dispense">Dispense</button></span></td>
@@ -37,12 +37,12 @@
 	</tr>
 	</table>
 	-->
-	<form method="post" action="index.php">
+	<form>
 		<div>
-			<label>What day do you want to automatically dispense food?<input type="date" name="auto-date"></label>
+			<label>What day do you want to automatically dispense food?<input type="date" name="auto-date"></input></label>
 		</div>
 		<div>
-			<label>What time do you want to automatically dispense food?<input type="time" name="auto-time"></label>
+			<label>What time do you want to automatically dispense food?<input type="time" name="auto-time"></input></label>
 		</div>
 		<div>
 			<label>How many cup(s) of food?<select name="amount">
@@ -58,24 +58,9 @@
 				<option>5 Cups</option>
 			</select>
 		</div>
-		<div>
-			<input type="submit" value="Submit">
-		</div>
+	
+	
 	</form>
-	
-	<?php
-	
-		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			$date = $_POST["auto-date"];
-			$time = $_POST["auto-time"];
-			$amount = $_POST["amount"];
-		
-			echo "<p>Dipsense $amount of food on $date at $time</p>";
-		}
-	
-	?>
-	
-
 	
 </body>
     
