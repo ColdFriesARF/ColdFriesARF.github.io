@@ -1,0 +1,67 @@
+#IR SENSOR CODE
+#This module will sit inside the food hopper. It basically just monitors food level. 
+#When food gets low enough it will detect that and let the user know its time to replenish the hopper
+#NOTE: this is already pretty much done. I don't see us upgrading the device and the code doesn't have to get much more difficult
+#NOTE: If anything (idk if this is possible) we could limit how often it takes measurements but I think this is kind of an always on thing.
+
+import RPi.GPIO as GPIO            #library that allows us to use pin numbers as Input/output
+Beam_PIN = 26 		           #setpin to GPIO 26 # the pin is set to pin 26 on the board. this is what sends the signal back and forth electrically to talk to the pi
+
+def break_beam_callback(channel)   #defining channel 
+    if GPIO.input(Beam_PIN): 	   #if nothing between sensors then food low
+        print("food level low")
+    else:                	   #something between sensors then food ok
+        print("food level ok")
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(BEAM_PIN, GPIO.IN, pull_up_down=GPIO.PUD.UP)  
+GPIO.add_event_detect(BEAM_PIN, GPIO.BOTH, callback=break_beam_callback)
+
+message = input("press enter to quit") #this line is just for returning with keyboard, technically won't be needed later on but it makes it EZ for testing to quit the program loop above
+GPIO.cleanup()
+
+```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+#FORCE SENSITIVE RESISTOR CODE
+#This component shows that there is food in the bowl. It will be attached underneath our bowl
+#This will require the most coding. We are trying to upgrade this sensor to read more accurate amounts of food in the bowl
+#As the motor is dispensing it will read food levels and when it hits the approximate desired amount it will send feedback to the pi 
+#telling the motor to stop turning. I have this new component. It comes with a load cell PCB I need to set it up and get it running
+
+import RPi.GPIO as GPIO #gives control over the GPIO's as their listed number on the pi
+import time #assuming this gives you the ability to break with time.sleep function
+
+GPIO.setmode(GPIO.BCM)
+GPIOsetup(16,GPIO.IN) #pin 16 will be an input
+
+prev_input=0 #variable that starts at 0
+
+try:
+    while True:
+        input = GPIO.input(16)
+
+        if ((not prev_input) and input): #this loop does (if original input of 0 has changed then it will show that there is food in the bowl. Then it shows that input. Not very intuitive. but does work. 
+            print("Food in bowl")        #what happens here is that a resistance is shown through pressure on the component and it tells the pi this through the loop code
+        prev_input = input               #we will want to upgrade this for various food amounts, i believe in grams, and then when it reaches that amount it will send a signal to the pi telling the input on the motor to stop running.
+        time.sleep(0.10)
+except KeyboardInterrupt:
+    pass
+#finally:
+    GPIO.cleanup()
+
+``````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+#SERVO MOTOR CODE
+# will be turning the auger under the hopper bowl to dispense food
+#not very intuitive. This just allows me to run the code and the servo spins until the time it has been told to stop. In this case 10 seconds. 
+#this code will need to be modified to work with the above code for the Force Sensitive Resistor of the food bowl in order to stop the motor when enough pressure in weight has been put in the bowl. 
+
+import RPI.GPIO as GPIO
+import time
+pin = 18     			#on pin 18
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18.GPIO.OUT)		#send signal out to the servo
+p= GPIO.PWM(18,60)		#pwm is for pulse width modulation, the signal sent out to this servo is supposed to be 60Hz frequency 
+p.ChangeDutyCycle(6.5) 		# i forget the meaning of the 6.5. here and in the next two lines.
+p.start(6.5)
+time.sleep(10)
+p.stop()
+GPIO.cleanup()
