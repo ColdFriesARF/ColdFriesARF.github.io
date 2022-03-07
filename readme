@@ -1,1 +1,7 @@
-
+The root folder holds all other folders.
+Code holds anything involving code for the project.
+Documentation holds any papers or anything related to the planning and specifics of the project.
+Electrical holds anything related to the mechanical and electrical compnents of the project.
+Meeting Minutes holds all our meeting minutes up to now.
+TPR will hold everything related to the Final Paper that will need to be written
+Everything else in the root folder will not be applicable for any of the other folders.
