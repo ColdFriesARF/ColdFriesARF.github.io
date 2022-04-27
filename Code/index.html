@@ -3,53 +3,97 @@
 <head>
     <meta charset="UTF-8">
 	<title>Automatic Remote Feeder</title>
-    <link rel="stylesheet" href="styles.css">
+<!--
+    <link rel="stylesheet"" href="C:\wamp64\www\wampthemes\simple\href="styles.css">
+--> 
+	<link rel="stylesheet" href="styles.css">
 	<script src="arf.js" defer></script>
+	
+	<style>
+		form {
+			border: 2px solid black;
+			padding: 5px;
+			margin: 25px 0;
+    			font-size: 0.9em;
+    			font-family: monospace;
+    			min-width: 400px;
+    			box-shadow: 0 0 10px rgba(0, 0, 10, 0.4);
+			
+		}
+		body {
+			text-align: center;
+			border: 4px solid black;
+			padding: 5px;
+			font-family: monospace;
+			text-shadow: 0.5px 0.5px;
+			margin: 25px 0;
+    			font-size: 0.9em;
+			color: black;
+		}
+		#form-title {
+			font-size: 16pt;
+			font-family: Garamond, serif;
+			font-weight: bold;
+			background-color: #0000FF;
+    			color: #ffffff;
+			box-sizing: border-box;
+		}
+	</style>
+	
 </head>
 
-<body>    
-	<table>
-		<tr>
-			<td style="text-align:center" colspan="2"><label for="dispense-amount">Dispense how many cups?</label></td>
-		</tr>
-		<tr>
-			<td><input type="range" id="dispense-amount" min="0" max="5" step=".5" value="5" onchange="range()"></td>
-			<td><span id="amount">Dispense 2.5 Cup(s)</span></td>
-		</tr>
-		<tr>
-			<td colspan="2"><span id="dispense-button"><button type="button" id="dispense">Dispense</button></span></td>
-		</tr>
-	</table>
-    
-<!--
-	<table>
-	<tr>
-		<td><label for="auto-date">What day do you want to automatically dispense food?</label></td>
-	</tr>
-	<tr>
-		<td style="text-align:center"><input type="date" id="auto-date"></input></td>
-	</tr>
-	<tr>
-		<td><label for="auto-time">What time do you want to automatically dispense food?</label></td>
-	</tr>
-	<tr>
-		<td style="text-align:center"><input type="time" id="auto-time"></input></td>
-	</tr>
-	</table>
--->
+<body>   
+<!-- 
+	<?php	
+		//getting form data from index.php on how much food to dispense
+		if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST) && !empty($_POST["dispense-amount"])) {
+			$amount = $_POST["dispense-amount"];
+			
+			$val = exec("sudo python3 /home/pi/mu_code/servo_copy.pi " .$amount."");
+			
+			header('location: index.php');
+		}
+	?>
+
 	<form method="post" action="index.php">
-		<div>
-			<label>What day do you want to automatically dispense food? <input type="date" name="auto-date"></label>
+-->
+		<div class="vertical-menu">
+ 		 <a href="#" class="active">Pet 1</a>
+ 		 <a href="#">Add Pet</a>
+  		 
+		</div>
+		<div id="form-title">
+			Insert the amount of food to dispense right now
 		</div>
 		<div>
-			<label>What time fo you want to automatically dispense food? <input type="time" name="auto-time"></label>
+			<label>How many gram(s) of food?     <input type="number" name="dispense-amount" value=1 min=1 step=1></label>
 		</div>
 		<div>
-			<label>How many cups to dispense? <input type="range" name="auto-amount" id="auto-dispense-amount" min="0" max="10" step=".5" value="5" onchange="auto-range()"></label>
-			<span id="auto-amount">Dispense 5 Cup(s)</span>
+			<input type="submit" value="Submit" name="dispense">
 		</div>
-		<input type="submit" value="Save">
 	</form>
+
+	<form method="post" action="test.php">
+		<div id="form-title">
+			Insert info below to add an automatic feed time
+		</div>
+		<div>
+			<label>What day do you want to automatically dispense food?   <input type="date" name="auto-date" value="2021-01-01"></label>
+		</div>
+		<div>
+			<label>What time do you want to automatically dispense food?   <input type="time" name="auto-time" value="00:00"></label>
+		</div>
+		<div>
+			<label>How many cup(s) of food?   <input type="number" name="amount" value=1 min=0 max=5 step=0.5></label>
+		</div>
+		<div>
+			<input type="submit" value="Submit" name="row-insert">
+		</div>
+	</form>
+	
+
+	
+	<a href="test.php" style="font-size:14pt"> Automatic Feed Times </a>
 	
 </body>
     
