@@ -7,17 +7,16 @@
 import RPi.GPIO as GPIO            #library that allows us to use pin numbers as Input/output
 Beam_PIN = 26 		           #setpin to GPIO 26 # the pin is set to pin 26 on the board. this is what sends the signal back and forth electrically to talk to the pi
 
-def break_beam_callback(channel)   #defining channel 
+def break_beam_callback()           #function to check the status of the sensor 
     if GPIO.input(Beam_PIN): 	   #if nothing between sensors then food low
         print("food level low")
-    else:                	   #something between sensors then food ok
+    else:                	     #something between sensors then food ok
         print("food level ok")
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(BEAM_PIN, GPIO.IN, pull_up_down=GPIO.PUD.UP)  
-GPIO.add_event_detect(BEAM_PIN, GPIO.BOTH, callback=break_beam_callback)
+break_beam_callback()               #calls the function to check the status of the sensor which is then sent to the web clients
 
-message = input("press enter to quit") #this line is just for returning with keyboard, technically won't be needed later on but it makes it EZ for testing to quit the program loop above
 GPIO.cleanup()
 
 ```````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
@@ -56,12 +55,15 @@ except KeyboardInterrupt:
 
 import RPI.GPIO as GPIO
 import time
+import sys              #library to use command line args
+
 pin = 18     			#on pin 18
+n = sys.argv[1]         #sets n to whatever the value is after calling the python code
+n = int(n)              #sets n to an interger since the command line arg is taken as a string
+
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(18.GPIO.OUT)		#send signal out to the servo
-p= GPIO.PWM(18,60)		#pwm is for pulse width modulation, the signal sent out to this servo is supposed to be 60Hz frequency 
-p.ChangeDutyCycle(6.5) 		# i forget the meaning of the 6.5. here and in the next two lines.
-p.start(6.5)
-time.sleep(10)
+p= GPIO.PWM(pin,60)		#pwm is for pulse width modulation, the signal sent out to this servo is supposed to be 60Hz frequency 
+time.sleep(n)              #change the offset to n so that the servo will run for n seconds
 p.stop()
 GPIO.cleanup()
